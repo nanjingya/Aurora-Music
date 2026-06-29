@@ -38,7 +38,10 @@ yarn-error.log*
 public/index.*.html
 !public/index.html
 
-# Screenshots and transient verification artifacts
+# Build icon intermediate
+build/icon.iconset/
+D:\\MineradioCache/
+**/MineradioCache/
 .playwright-cli/
 output/
 tmp/

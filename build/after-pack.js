@@ -43,22 +43,22 @@ function resolveRcedit(projectDir) {
 module.exports = async function afterPack(context) {
   if (context.electronPlatformName !== 'win32') return;
 
-  const appName = context.packager.appInfo.productFilename || 'Mineradio';
+  const appName = context.packager.appInfo.productFilename || 'Aurora Music';
   const exePath = path.join(context.appOutDir, `${appName}.exe`);
   const iconPath = path.join(context.packager.info.buildResourcesDir, 'icon.ico');
   const rceditPath = resolveRcedit(context.packager.projectDir);
 
-  if (!fs.existsSync(exePath)) throw new Error(`Mineradio executable was not found: ${exePath}`);
-  if (!fs.existsSync(iconPath)) throw new Error(`Mineradio icon was not found: ${iconPath}`);
+  if (!fs.existsSync(exePath)) throw new Error(`Aurora Music executable was not found: ${exePath}`);
+  if (!fs.existsSync(iconPath)) throw new Error(`Aurora Music icon was not found: ${iconPath}`);
 
   const version = context.packager.appInfo.version;
-  console.log(`  • injecting Mineradio resources  rcedit=${rceditPath}`);
+  console.log(`  • injecting Aurora Music resources  rcedit=${rceditPath}`);
   execFileSync(rceditPath, [
     exePath,
     '--set-icon', iconPath,
-    '--set-version-string', 'FileDescription', 'Mineradio',
-    '--set-version-string', 'ProductName', 'Mineradio',
-    '--set-version-string', 'CompanyName', 'Mineradio',
+    '--set-version-string', 'FileDescription', 'Aurora Music',
+    '--set-version-string', 'ProductName', 'Aurora Music',
+    '--set-version-string', 'CompanyName', 'nanjingya',
     '--set-version-string', 'OriginalFilename', `${appName}.exe`,
     '--set-file-version', version,
     '--set-product-version', version

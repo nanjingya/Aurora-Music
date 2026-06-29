@@ -29,14 +29,23 @@ const WINDOWED_SCALE = 3 / 4;
 const WINDOWED_MARGIN = 32;
 const MIN_WINDOWED_WIDTH = 960;
 const MIN_WINDOWED_HEIGHT = 540;
-const APP_NAME = 'Mineradio';
-const APP_USER_MODEL_ID = 'com.mineradio.desktop';
+const APP_NAME = 'Aurora Music';
+const APP_USER_MODEL_ID = 'com.nanjingya.auroramusic';
+const IS_MAC = process.platform === 'darwin';
 const APP_ICON_ICO = path.join(__dirname, '..', 'build', 'icon.ico');
+const APP_ICON_PNG = path.join(__dirname, '..', 'build', 'icon.png');
+const APP_ICON_ICNS = path.join(__dirname, '..', 'build', 'icon.icns');
+const APP_ICON = IS_MAC ? (fs.existsSync(APP_ICON_ICNS) ? APP_ICON_ICNS : APP_ICON_PNG) : APP_ICON_ICO;
 const NETEASE_LOGIN_PARTITION = 'persist:mineradio-netease-login';
 const NETEASE_LOGIN_URL = 'https://music.163.com/#/login';
 const QQ_LOGIN_PARTITION = 'persist:mineradio-qqmusic-login';
 const QQ_LOGIN_URL = 'https://y.qq.com/n/ryqq/profile';
 
+const ANGLE_BACKEND_BY_PLATFORM = {
+  win32: 'd3d11',
+  darwin: 'metal',
+  linux: 'gl',
+};
 const CHROMIUM_PERFORMANCE_SWITCHES = [
   ['autoplay-policy', 'no-user-gesture-required'],
   ['ignore-gpu-blocklist'],
@@ -48,11 +57,15 @@ const CHROMIUM_PERFORMANCE_SWITCHES = [
   ['disable-renderer-backgrounding'],
   ['disable-backgrounding-occluded-windows'],
   ['force_high_performance_gpu'],
-  ['use-angle', 'd3d11'],
+  ['use-angle', ANGLE_BACKEND_BY_PLATFORM[process.platform] || 'gl'],
 ];
-for (const [name, value] of CHROMIUM_PERFORMANCE_SWITCHES) {
-  if (value == null) app.commandLine.appendSwitch(name);
-  else app.commandLine.appendSwitch(name, value);
+try {
+  for (const [name, value] of CHROMIUM_PERFORMANCE_SWITCHES) {
+    if (value == null) app.commandLine.appendSwitch(name);
+    else app.commandLine.appendSwitch(name, value);
+  }
+} catch (e) {
+  console.warn('[Aurora Music] Chromium switch setup skipped:', e.message);
 }
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 
@@ -244,10 +257,10 @@ function getWindowState(win) {
   };
   return {
     isMaximized: win.isMaximized(),
-    isNativeFullScreen: win.isFullScreen(),
+    isNativeFullScreen: winIsFullScreen(win),
     isHtmlFullScreen: htmlFullscreenActive,
     isWindowFullScreen: windowFullscreenActive,
-    isFullScreen: win.isFullScreen() || htmlFullscreenActive || windowFullscreenActive,
+    isFullScreen: winIsFullScreen(win) || htmlFullscreenActive || windowFullscreenActive,
     isMinimized: win.isMinimized(),
     isVisible: win.isVisible(),
     isFocused: win.isFocused(),
@@ -287,7 +300,7 @@ function ensureDesktopShortcut() {
       target,
       cwd: path.dirname(target),
       args: '',
-      description: 'Mineradio desktop music player',
+      description: 'Aurora Music immersive desktop music player',
       icon: fs.existsSync(APP_ICON_ICO) ? APP_ICON_ICO : target,
       iconIndex: 0,
       appUserModelId: APP_USER_MODEL_ID,
@@ -417,7 +430,7 @@ async function openNeteaseMusicLoginWindow(owner) {
       autoHideMenuBar: true,
       title: '网易云音乐登录',
       backgroundColor: '#111111',
-      icon: APP_ICON_ICO,
+      icon: APP_ICON,
       webPreferences: {
         partition: NETEASE_LOGIN_PARTITION,
         contextIsolation: true,
@@ -519,7 +532,7 @@ async function openQQMusicLoginWindow(owner) {
       autoHideMenuBar: true,
       title: 'QQ 音乐登录',
       backgroundColor: '#111111',
-      icon: APP_ICON_ICO,
+      icon: APP_ICON,
       webPreferences: {
         partition: QQ_LOGIN_PARTITION,
         contextIsolation: true,
@@ -667,12 +680,37 @@ function applyWindowedBounds(win) {
   sendWindowState(win);
 }
 
+// macOS 透明无边框窗口无法使用原生 setFullScreen（会黑屏/无反应），
+// 改用 simpleFullScreen：覆盖整个屏幕但不进入系统全屏空间，兼容透明窗口。
+function winIsFullScreen(win) {
+  if (!win || win.isDestroyed()) return false;
+  if (IS_MAC) {
+    try { return win.isSimpleFullScreen(); } catch (e) { return false; }
+  }
+  return win.isFullScreen();
+}
+
+function setWinFullScreen(win, flag) {
+  if (!win || win.isDestroyed()) return;
+  if (IS_MAC) {
+    try { win.setSimpleFullScreen(flag); } catch (e) {}
+    return;
+  }
+  win.setFullScreen(flag);
+}
+
 function exitFullscreenToWindow(win) {
   if (!win || win.isDestroyed()) return;
   windowFullscreenActive = false;
 
-  if (!win.isFullScreen()) {
+  if (!winIsFullScreen(win)) {
     applyWindowedBounds(win);
+    return;
+  }
+
+  if (IS_MAC) {
+    setWinFullScreen(win, false);
+    setTimeout(() => applyWindowedBounds(win), 50);
     return;
   }
 
@@ -690,12 +728,37 @@ function exitFullscreenToWindow(win) {
 
 function toggleFullscreen(win) {
   if (!win || win.isDestroyed()) return;
-  if (win.isFullScreen() || windowFullscreenActive) {
+  if (winIsFullScreen(win) || windowFullscreenActive) {
     exitFullscreenToWindow(win);
     return;
   }
   windowFullscreenActive = true;
-  win.setFullScreen(true);
+  setWinFullScreen(win, true);
+  sendWindowState(win);
+}
+
+function toggleMaximize(win) {
+  if (!win || win.isDestroyed()) return;
+  if (winIsFullScreen(win) || windowFullscreenActive) {
+    exitFullscreenToWindow(win);
+    return;
+  }
+  if (IS_MAC) {
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      const display = screen.getDisplayMatching(win.getBounds());
+      const area = (display && display.workArea) || (display && display.bounds);
+      if (area) win.setBounds(area, true);
+    }
+    sendWindowState(win);
+    return;
+  }
+  if (win.isMaximized()) {
+    win.unmaximize();
+  } else {
+    win.maximize();
+  }
   sendWindowState(win);
 }
 
@@ -929,7 +992,7 @@ function createDesktopLyricsWindow(payload = {}) {
     focusable: false,
     skipTaskbar: true,
     show: false,
-    title: 'Mineradio Desktop Lyrics',
+    title: 'Aurora Music Desktop Lyrics',
     webPreferences: {
       preload: path.join(__dirname, 'overlay-preload.js'),
       contextIsolation: true,
@@ -1058,7 +1121,7 @@ function createWallpaperWindow(payload = {}) {
     focusable: false,
     skipTaskbar: true,
     show: false,
-    title: 'Mineradio Wallpaper',
+    title: 'Aurora Music Wallpaper',
     webPreferences: {
       preload: path.join(__dirname, 'overlay-preload.js'),
       contextIsolation: true,
@@ -1102,7 +1165,7 @@ ipcMain.handle('desktop-window-minimize', (event) => {
 });
 
 ipcMain.handle('desktop-window-toggle-maximize', (event) => {
-  toggleFullscreen(getSenderWindow(event));
+  toggleMaximize(getSenderWindow(event));
 });
 
 ipcMain.handle('desktop-window-toggle-fullscreen', (event) => {
@@ -1130,7 +1193,7 @@ ipcMain.handle('mineradio-export-json-file', async (event, payload = {}) => {
     const owner = getSenderWindow(event);
     const defaultName = String(payload.defaultName || 'mineradio-export.json').replace(/[\\/:*?"<>|]+/g, '-');
     const result = await dialog.showSaveDialog(owner, {
-      title: '导出 Mineradio 存档',
+      title: '导出 Aurora Music 存档',
       defaultPath: defaultName.toLowerCase().endsWith('.json') ? defaultName : `${defaultName}.json`,
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
@@ -1147,7 +1210,7 @@ ipcMain.handle('mineradio-import-json-file', async (event) => {
   try {
     const owner = getSenderWindow(event);
     const result = await dialog.showOpenDialog(owner, {
-      title: '导入 Mineradio 存档',
+      title: '导入 Aurora Music 存档',
       properties: ['openFile'],
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
@@ -1351,13 +1414,14 @@ async function createWindow() {
     minHeight: 540,
     show: false,
     frame: false,
+    ...(IS_MAC ? { titleBarStyle: 'hidden', trafficLightPosition: { x: -100, y: -100 }, fullscreenable: true } : {}),
     fullscreen: false,
     transparent: true,
     backgroundColor: '#00000000',
     hasShadow: true,
-    autoHideMenuBar: true,
+    autoHideMenuBar: !IS_MAC,
     title: APP_NAME,
-    icon: APP_ICON_ICO,
+    icon: APP_ICON,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -1377,7 +1441,7 @@ async function createWindow() {
   });
 
   mainWindow.webContents.on('before-input-event', (event, input) => {
-    if (input.type === 'keyDown' && (input.key === 'Escape' || input.code === 'Escape') && mainWindow.isFullScreen()) {
+    if (input.type === 'keyDown' && (input.key === 'Escape' || input.code === 'Escape') && (winIsFullScreen(mainWindow) || windowFullscreenActive)) {
       event.preventDefault();
       exitFullscreenToWindow(mainWindow);
     }
@@ -1428,6 +1492,15 @@ async function createWindow() {
 
 app.setName(APP_NAME);
 if (process.platform === 'win32') app.setAppUserModelId(APP_USER_MODEL_ID);
+if (process.platform === 'darwin') {
+  try {
+    if (app.dock) {
+      const dockIcon = fs.existsSync(APP_ICON_ICNS) ? APP_ICON_ICNS : APP_ICON_PNG;
+      if (fs.existsSync(dockIcon)) app.dock.setIcon(dockIcon);
+    }
+    app.setAboutPanelOptions({ applicationName: APP_NAME, applicationVersion: require('../package.json').version });
+  } catch (e) {}
+}
 
 if (!gotSingleInstanceLock) {
   app.quit();

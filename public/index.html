@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mineradio</title>
+<title>Aurora Music</title>
 <meta name="referrer" content="no-referrer">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 <script src="vendor/three.r128.min.js"></script>
@@ -39,6 +39,9 @@ body.desktop-shell{background:transparent}
 body.desktop-shell #desktop-window-shell{display:block;position:fixed;inset:0;overflow:hidden;border-radius:34px;clip-path:inset(0 round 34px);background:transparent;box-shadow:0 24px 80px rgba(0,0,0,.46);transform:translateZ(0)}
 body.desktop-shell.desktop-maximized #desktop-window-shell,body.desktop-shell.desktop-fullscreen #desktop-window-shell,html:fullscreen body.desktop-shell #desktop-window-shell{border-radius:0!important;clip-path:none!important;box-shadow:none!important}
 body.desktop-shell #desktop-titlebar{position:fixed;z-index:500;top:0;left:0;right:0;height:44px;padding:0 12px 0 18px;display:flex;align-items:center;justify-content:space-between;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;-webkit-app-region:drag;pointer-events:none}
+body.desktop-shell.platform-darwin #desktop-titlebar{padding-left:14px}
+body.desktop-shell.platform-darwin.desktop-maximized #desktop-titlebar,body.desktop-shell.platform-darwin.desktop-fullscreen #desktop-titlebar{padding-left:14px}
+body.desktop-shell.platform-darwin #desktop-window-shell{border-radius:12px;clip-path:inset(0 round 12px)}
 body.desktop-shell #desktop-titlebar::after{content:none}
 .desktop-drag-region{height:100%;flex:1;display:flex;align-items:center;gap:9px;min-width:0;color:rgba(224,250,255,.74);font-size:12px;font-weight:600;letter-spacing:0;text-transform:uppercase;-webkit-app-region:drag;pointer-events:auto}
 .desktop-app-mark{display:none}
@@ -121,10 +124,10 @@ body.idle-guide-dragging #canvas-container{cursor:grabbing}
 #splash.exiting #splash-canvas{opacity:.30;transform:scale(1.012)}
 .splash-bg-noise{position:absolute;inset:0;z-index:3;opacity:.038;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");background-size:180px 180px;mix-blend-mode:screen;pointer-events:none}
 .splash-content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:none;transform:translateY(4px);transition:opacity 680ms cubic-bezier(.22,1,.36,1),transform 860ms cubic-bezier(.22,1,.36,1)}
-.splash-wordmark{position:relative;display:flex;align-items:baseline;justify-content:center;height:clamp(70px,12vw,136px);min-width:min(74vw,760px);font-size:clamp(52px,8.8vw,112px);line-height:.92;font-weight:720;letter-spacing:-.055em;color:#f8f8f2;text-shadow:0 20px 82px rgba(0,0,0,.68),-2px 0 18px rgba(255,83,103,.16),2px 0 18px rgba(122,215,194,.12);isolation:isolate;filter:drop-shadow(0 0 22px rgba(244,210,138,.075))}
-.splash-word-mine,.splash-word-radio{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;will-change:opacity,transform,letter-spacing}
-.splash-word-mine{opacity:0;animation:splash-mine-in 5200ms cubic-bezier(.22,1,.36,1) forwards;text-shadow:-2px 0 0 rgba(255,83,103,.24),2px 0 0 rgba(122,215,194,.18),0 22px 72px rgba(0,0,0,.58),0 0 34px rgba(244,210,138,.10)}
-.splash-word-radio{opacity:0;letter-spacing:-.018em;background:linear-gradient(94deg,rgba(255,255,255,.06),#fff 26%,rgba(244,210,138,.98) 48%,rgba(122,215,194,.90) 68%,rgba(255,255,255,.82));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:splash-radio-in 5200ms cubic-bezier(.22,1,.36,1) forwards;text-shadow:-2px 0 0 rgba(255,83,103,.16),2px 0 0 rgba(122,215,194,.22),0 0 34px rgba(122,215,194,.10)}
+.splash-wordmark{position:relative;display:flex;align-items:baseline;justify-content:center;gap:clamp(10px,1.8vw,22px);height:clamp(70px,12vw,136px);font-size:clamp(52px,8.8vw,112px);line-height:.92;font-weight:720;letter-spacing:-.04em;color:#f8f8f2;text-shadow:0 20px 82px rgba(0,0,0,.68),-2px 0 18px rgba(255,83,103,.16),2px 0 18px rgba(122,215,194,.12);isolation:isolate;filter:drop-shadow(0 0 22px rgba(244,210,138,.075))}
+.splash-word-mine,.splash-word-radio{position:relative;white-space:nowrap;will-change:opacity,transform,letter-spacing}
+.splash-word-mine{opacity:0;animation:splash-aurora-in 3600ms cubic-bezier(.22,1,.36,1) forwards;text-shadow:-2px 0 0 rgba(255,83,103,.24),2px 0 0 rgba(122,215,194,.18),0 22px 72px rgba(0,0,0,.58),0 0 34px rgba(244,210,138,.10)}
+.splash-word-radio{opacity:0;color:#00f5d4;-webkit-text-fill-color:#00f5d4;letter-spacing:-.01em;animation:splash-music-in 3600ms cubic-bezier(.22,1,.36,1) forwards;text-shadow:0 0 28px rgba(0,245,212,.22),0 0 48px rgba(122,215,194,.12)}
 .splash-word-i{display:inline-block;position:relative;width:.24em;height:.86em;margin:0 .022em;vertical-align:-.015em;color:transparent;-webkit-text-fill-color:transparent}
 .splash-word-i::before{content:'';position:absolute;left:50%;bottom:.015em;width:.108em;height:.565em;border-radius:.06em;background:linear-gradient(180deg,#f8edd1 0%,#d8bd78 100%);transform:translateX(-50%);box-shadow:0 0 14px rgba(244,210,138,.12)}
 .splash-word-i::after{content:'';position:absolute;left:50%;top:.035em;width:.142em;height:.142em;border-radius:50%;background:#fff;box-shadow:0 0 16px rgba(244,210,138,.44),0 0 36px rgba(255,255,255,.16);opacity:0;transform:translate(-50%,.22em) scale(.34);animation:splash-i-dot-pop 4200ms cubic-bezier(.22,1,.36,1) forwards}
@@ -135,8 +138,8 @@ body.idle-guide-dragging #canvas-container{cursor:grabbing}
 .splash-enter{margin-top:8px;font-size:11px;font-weight:700;letter-spacing:.24em;color:rgba(255,255,255,.62);text-transform:uppercase;opacity:0;transform:translateY(10px);text-shadow:0 0 18px rgba(244,210,138,.24),0 0 34px rgba(122,215,194,.12);transition:opacity 620ms cubic-bezier(.22,1,.36,1),transform 620ms cubic-bezier(.22,1,.36,1)}
 #splash.ready .splash-enter{opacity:1;transform:translateY(0);animation:splash-enter-pulse 1800ms ease-in-out infinite alternate}
 @keyframes splash-field-breathe{0%{opacity:.72;transform:scale(1)}100%{opacity:1;transform:scale(1.035)}}
-@keyframes splash-mine-in{0%{opacity:0;clip-path:inset(48% 0 49% 0);transform:translate(calc(-50% - 10px),-42%) skewX(-10deg) scaleX(1.08);letter-spacing:.055em}14%{opacity:.92;clip-path:inset(40% 0 42% 0);transform:translate(calc(-50% - 4px),-50%) skewX(-4deg) scaleX(1.04);letter-spacing:.014em}26%{opacity:1;clip-path:inset(0);transform:translate(-50%,-50%) skewX(0) scaleX(1);letter-spacing:-.040em}48%{opacity:1;transform:translate(-50%,-50%) scale(1)}67%{opacity:1;transform:translate(calc(-50% - clamp(66px,10.8vw,130px)),-50%) scale(.998);letter-spacing:-.055em}100%{opacity:1;transform:translate(calc(-50% - clamp(66px,10.8vw,130px)),-50%) scale(.998)}}
-@keyframes splash-radio-in{0%,32%{opacity:0;clip-path:inset(52% 0 44% 0);transform:translate(calc(-50% + clamp(78px,12vw,142px)),-50%) skewX(9deg) scaleX(1.06);background-position:0 0}48%{opacity:.88;clip-path:inset(34% 0 32% 0);transform:translate(calc(-50% + clamp(72px,11.5vw,138px)),-50%) skewX(3deg) scaleX(1.02);background-position:52% 0}66%{opacity:1;clip-path:inset(0);transform:translate(calc(-50% + clamp(70px,11.4vw,136px)),-50%) scale(1);background-position:76% 0}100%{opacity:1;transform:translate(calc(-50% + clamp(70px,11.4vw,136px)),-50%) scale(1);background-position:100% 0}}
+@keyframes splash-aurora-in{0%{opacity:0;transform:translateY(14px);letter-spacing:.06em}100%{opacity:1;transform:translateY(0);letter-spacing:-.02em}}
+@keyframes splash-music-in{0%,18%{opacity:0;transform:translateY(14px);letter-spacing:.04em}100%{opacity:1;transform:translateY(0);letter-spacing:-.01em}}
 @keyframes splash-i-dot-pop{0%,48%{opacity:0;transform:translate(-50%,.22em) scale(.34)}60%{opacity:1;transform:translate(-50%,-.018em) scale(1.12)}68%{opacity:.92;transform:translate(-50%,.010em) scale(.94)}76%,100%{opacity:1;transform:translate(-50%,0) scale(1)}}
 @keyframes splash-signal-line{0%,28%{opacity:0;transform:scaleX(.10)}44%{opacity:.98;transform:scaleX(1.05)}64%{opacity:.70;transform:scaleX(.82)}76%{opacity:1;transform:scaleX(1.14);box-shadow:0 0 28px rgba(244,210,138,.36),0 0 60px rgba(122,215,194,.18)}100%{opacity:.30;transform:scaleX(.64)}}
 @keyframes splash-signal-blip{0%,42%{opacity:0;left:18%;transform:translate(-50%,-50%) scale(.24)}62%{opacity:.94;left:50%;transform:translate(-50%,-50%) scale(1)}76%{opacity:1;left:50%;transform:translate(-50%,-50%) scale(1.45)}100%{opacity:.16;left:82%;transform:translate(-50%,-50%) scale(.46)}}
@@ -246,6 +249,41 @@ body.home-wallpaper-preview #canvas-container{filter:none}
 .home-hero::after{content:'';position:absolute;left:28px;right:28px;bottom:22px;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--home-accent) 0%,transparent),color-mix(in srgb,var(--home-accent) 52%,transparent),rgba(36,66,255,.24),rgba(248,244,238,.18),color-mix(in srgb,var(--home-accent) 0%,transparent));opacity:.82;pointer-events:none}
 .home-hero-inner{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(150px,.64fr);grid-template-rows:auto auto auto auto minmax(150px,1fr);column-gap:18px}
 .home-hero-inner.home-construction-inner{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:18px;padding:4px 2px;min-height:100%}
+.home-hero-inner.home-account-inner{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:2px 2px;min-height:100%}
+.home-account-inner .home-kicker{margin-bottom:12px}
+.home-account-row{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.home-account-card{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:16px;border:1px solid rgba(255,255,255,.085);background:rgba(255,255,255,.040);cursor:pointer;transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;text-align:left}
+.home-account-card:hover{background:rgba(255,255,255,.07);border-color:color-mix(in srgb,var(--home-accent) 32%,rgba(255,255,255,.10));transform:translateY(-1px);box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.home-account-card .home-account-avatar{width:42px;height:42px;border-radius:12px;object-fit:cover;background:rgba(255,255,255,.06);flex:0 0 auto}
+.home-account-card .home-account-meta{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.home-account-card .home-account-name{font-size:14px;font-weight:740;color:rgba(255,255,255,.96);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-account-card .home-account-sub{font-size:11px;color:rgba(255,255,255,.50);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-account-platform{font-size:9.5px;font-weight:780;letter-spacing:.1em;padding:3px 8px;border-radius:999px;flex:0 0 auto}
+.home-account-platform.netease{color:#ff7a86;background:rgba(255,83,103,.14);border:1px solid rgba(255,83,103,.26)}
+.home-account-platform.qq{color:#bfe06b;background:rgba(150,200,70,.13);border:1px solid rgba(150,200,70,.26)}
+.home-account-card.logged-out{background:rgba(255,255,255,.025);border-style:dashed}
+.home-account-card.logged-out .home-account-avatar{opacity:.55}
+.home-account-card .home-account-vip{margin-left:6px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;color:#1a1206;background:linear-gradient(135deg,#ffd98a,#f4b04a)}
+.home-account-card .home-account-vip.qq{color:#10210a;background:linear-gradient(135deg,#cde98a,#9fce5a)}
+.home-daily-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:16px 0 11px;padding-bottom:11px;border-bottom:1px solid rgba(255,255,255,.07)}
+.home-daily-kicker{font-size:10px;font-weight:780;letter-spacing:.16em;color:color-mix(in srgb,var(--home-accent) 60%,rgba(255,255,255,.36));text-transform:uppercase}
+.home-daily-h{margin-top:5px;font-size:20px;font-weight:760;color:rgba(255,255,255,.96)}
+.home-daily-refresh-chip{flex:0 0 auto;height:30px}
+.home-daily-list{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:5px;padding-right:3px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--home-accent) 26%,transparent) transparent}
+.home-daily-list::-webkit-scrollbar{width:4px}
+.home-daily-list::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--home-accent) 28%,transparent);border-radius:4px}
+.home-daily-row{display:flex;align-items:center;gap:11px;padding:7px 9px;border-radius:12px;border:1px solid rgba(255,255,255,.045);background:rgba(255,255,255,.028);cursor:pointer;transition:background .16s,border-color .16s,transform .16s}
+.home-daily-row:hover{background:color-mix(in srgb,var(--home-accent) 9%,rgba(255,255,255,.05));border-color:color-mix(in srgb,var(--home-accent) 30%,rgba(255,255,255,.08));transform:translateX(2px)}
+.home-daily-row .home-daily-idx{width:20px;flex:0 0 auto;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.34)}
+.home-daily-row .home-daily-cover{width:38px;height:38px;border-radius:9px;object-fit:cover;background:rgba(255,255,255,.06);flex:0 0 auto}
+.home-daily-row .home-daily-info{min-width:0;flex:1}
+.home-daily-row .home-daily-name{font-size:12.5px;font-weight:640;color:rgba(255,255,255,.90);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-daily-row .home-daily-artist{font-size:10.5px;color:rgba(255,255,255,.46);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.home-daily-row .home-daily-play{width:26px;height:26px;flex:0 0 auto;border-radius:50%;border:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--home-accent) 16%,rgba(255,255,255,.06));color:#fff;opacity:0;transition:opacity .16s,transform .16s}
+.home-daily-row:hover .home-daily-play{opacity:1}
+.home-daily-row .home-daily-play svg{width:12px;height:12px;fill:currentColor}
+.home-daily-empty{padding:30px 12px;text-align:center;color:rgba(255,255,255,.38);font-size:12px;line-height:1.6}
+.home-daily-empty .home-chip{margin-top:12px}
 .home-kicker{grid-column:1;font-size:10px;font-weight:780;letter-spacing:.18em;color:color-mix(in srgb,var(--home-accent) 62%,rgba(255,255,255,.36));text-transform:uppercase;margin-bottom:14px}
 .home-title{grid-column:1;font-size:clamp(34px,4.6vw,58px);line-height:.98;font-weight:760;letter-spacing:0;color:rgba(255,255,255,.98);max-width:380px;text-shadow:0 10px 36px rgba(0,0,0,.26)}
 .home-title.home-construction-title{max-width:620px;font-size:clamp(32px,4.5vw,64px);line-height:1.08}
@@ -306,6 +344,11 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-card-art{position:absolute;z-index:1;right:13px;bottom:13px;width:108px;height:108px;border-radius:24px;background:linear-gradient(135deg,color-mix(in srgb,var(--tone-a) 78%,#14141a),color-mix(in srgb,var(--tone-b) 68%,#09090d));background-size:cover;background-position:center;box-shadow:0 18px 50px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.16);transform:rotate(3deg);overflow:hidden}
 .home-card-art:not(.has-cover)::before{content:'';position:absolute;inset:18px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.16) 0 1px,transparent 1px 8px),conic-gradient(from 180deg,var(--tone-a),var(--tone-b),var(--tone-c),var(--tone-a));box-shadow:inset 0 0 0 14px rgba(5,5,8,.44),0 12px 28px rgba(0,0,0,.26)}
 .home-card-art::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.12),transparent 42%,rgba(0,0,0,.28));pointer-events:none}
+.home-card-refresh{position:absolute;top:11px;right:11px;z-index:3;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(10,11,15,.55);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);color:rgba(255,255,255,.78);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s ease,color .18s ease,border-color .18s ease,background .18s ease;opacity:0;transform:translateY(-4px);pointer-events:auto}
+.home-card:hover .home-card-refresh,.home-card-refresh:focus-visible{opacity:1;transform:translateY(0)}
+.home-card-refresh:hover{color:#fff;border-color:rgba(var(--fc-accent-rgb),.42);background:rgba(var(--fc-accent-rgb),.14)}
+.home-card-refresh.spinning svg{animation:home-card-refresh-spin .9s linear infinite}
+@keyframes home-card-refresh-spin{to{transform:rotate(360deg)}}
 .home-rail{align-self:stretch;min-height:0;display:grid;grid-template-rows:auto 1fr;gap:12px}
 .home-tile-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;min-height:0}
 .home-tile{--tone-a:#00f5d4;--tone-b:#2442ff;--tone-c:#f8f4ee;position:relative;min-width:0;min-height:166px;border:1px solid color-mix(in srgb,var(--home-accent) 9%,rgba(255,255,255,.075));border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.060),rgba(255,255,255,.025));box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.052);backdrop-filter:blur(20px) saturate(1.10);-webkit-backdrop-filter:blur(20px) saturate(1.10);padding:10px;color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
@@ -319,6 +362,10 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-tile-cover:not(.has-cover)::after{content:'';position:absolute;right:12px;top:14px;width:46px;height:48px;border-radius:999px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.72) 0 3px,transparent 3px 9px);opacity:.32}
 .home-tile-title{font-size:12px;font-weight:720;color:rgba(255,255,255,.90);line-height:1.28;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .home-tile-sub{display:none;font-size:10.5px;color:rgba(255,255,255,.42);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-tile{display:flex;flex-direction:column}
+.home-tile-cover{flex:1 1 auto}
+.home-tile-title{flex:0 0 auto}
+.home-tile::before{display:none}
 .home-skeleton{position:relative;overflow:hidden}
 .home-skeleton::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);animation:home-shimmer 1.5s ease-in-out infinite}
 @keyframes home-shimmer{100%{transform:translateX(100%)}}
@@ -1015,12 +1062,21 @@ body.login-guide-active #login-guide-canvas{opacity:1}
 /* ============================================================ */
 /*  控制台 — 简化版                                              */
 /* ============================================================ */
-#fx-panel{position:fixed;z-index:18;right:-460px;bottom:92px;width:min(444px,calc(100vw - 48px));max-height:min(650px,calc(100vh - 132px));overflow:auto;overscroll-behavior:contain;background:var(--glass-bg);border:1px solid rgba(0,245,212,0.16);border-radius:20px;padding:18px 18px 20px;backdrop-filter:blur(44px) saturate(1.34);-webkit-backdrop-filter:blur(44px) saturate(1.34);box-shadow:var(--glass-shadow);opacity:0;transition:right .55s cubic-bezier(.16,1,.3,1),opacity .45s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none;transform:translateY(18px) scale(.97);scrollbar-width:thin;scrollbar-color:rgba(0,245,212,.22) transparent}
+#fx-panel{position:fixed;z-index:18;right:-460px;bottom:92px;width:min(444px,calc(100vw - 48px));max-height:min(650px,calc(100vh - 132px));overflow:auto;overscroll-behavior:contain;background:var(--glass-bg);border:1px solid rgba(0,245,212,0.16);border-radius:20px;padding:18px 18px 20px;backdrop-filter:blur(44px) saturate(1.34);-webkit-backdrop-filter:blur(44px) saturate(1.34);box-shadow:var(--glass-shadow);opacity:0;transition:right .55s cubic-bezier(.16,1,.3,1),opacity .45s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none;transform:translateY(18px) scale(.97);scrollbar-width:thin;scrollbar-color:rgba(0,245,212,.22) transparent;will-change:transform,opacity}
+#fx-panel.entering{backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1)}
 #fx-panel.show, #fx-panel.peek{right:24px;opacity:1;pointer-events:auto;transform:translateY(0)}
 #fx-panel.show{animation:fx-panel-in .56s cubic-bezier(.16,1,.3,1)}
 #fx-panel.closing{animation:fx-panel-out .26s cubic-bezier(.5,0,.7,1)}
 #fx-panel::-webkit-scrollbar{width:3px}
 #fx-panel::-webkit-scrollbar-thumb{background:rgba(0,245,212,.24);border-radius:3px}
+.fx-head-act{display:flex;align-items:center;gap:6px}
+.fx-head .fx-close-btn,.fx-head .fx-fold-btn,.fx-head .fx-pin-btn{opacity:0;transform:translateX(4px);transition:opacity .18s ease,transform .18s ease}
+.fx-head:hover .fx-close-btn,.fx-head:hover .fx-fold-btn,.fx-head:hover .fx-pin-btn,.fx-close-btn:focus-visible,.fx-fold-btn:focus-visible,.fx-pin-btn:focus-visible,.fx-close-btn.active,.fx-fold-btn.active,.fx-pin-btn.active{opacity:1;transform:translateX(0)}
+.fx-fold-btn.active svg{transform:rotate(180deg)}
+.fx-fold-btn svg{transition:transform .22s ease}
+#fx-panel.fx-folded .fx-section-label,#fx-panel.fx-folded .preset-grid,#fx-panel.fx-folded .user-archive-grid,#fx-panel.fx-folded .lyric-color-row,#fx-panel.fx-folded .lyric-tab-row,#fx-panel.fx-folded .fx-scroll-area,#fx-panel.fx-folded .fx-preset-extra,#fx-panel.fx-folded .fx-section{display:none!important}
+#fx-panel.fx-folded .fx-head{margin-bottom:0}
+#fx-panel.fx-folded{width:min(280px,calc(100vw - 48px))}
 #fx-fab{position:fixed;z-index:19;right:24px;bottom:24px;width:54px;height:54px;border-radius:50%;border:1px solid rgba(0,245,212,.30);background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.055) 48%,rgba(0,245,212,.055));color:rgba(232,236,239,.88);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(26px) saturate(1.34);-webkit-backdrop-filter:blur(26px) saturate(1.34);box-shadow:0 14px 40px rgba(0,0,0,.34),0 0 24px rgba(0,245,212,.07),inset 0 1px 0 rgba(255,255,255,.18);transition:bottom .38s cubic-bezier(.16,1,.3,1),transform .28s cubic-bezier(.16,1,.3,1),background .28s,border-color .28s,color .28s,box-shadow .28s}
 #fx-fab:hover,#fx-fab.active{transform:translateY(-2px) scale(1.04);background:rgba(0,245,212,.075);border-color:rgba(0,245,212,.50);color:#fff}
 #fx-fab svg{transition:transform .38s cubic-bezier(.16,1,.3,1)}
@@ -1054,8 +1110,8 @@ body.desktop-shell.diy-mode #bottom-bar.stage-mode{left:50%;width:min(1080px,cal
   body.desktop-shell.diy-mode #fx-panel.show,
   body.desktop-shell.diy-mode #fx-panel.peek{right:18px}
 }
-@keyframes fx-panel-in{0%{opacity:0;transform:translateX(32px) translateY(18px) scale(.96);filter:blur(8px)}100%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}}
-@keyframes fx-panel-out{0%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}100%{opacity:0;transform:translateX(24px) translateY(12px) scale(.97);filter:blur(6px)}}
+@keyframes fx-panel-in{0%{opacity:0;transform:translateX(32px) translateY(18px) scale(.96)}100%{opacity:1;transform:translateX(0) translateY(0) scale(1)}}
+@keyframes fx-panel-out{0%{opacity:1;transform:translateX(0) translateY(0) scale(1)}100%{opacity:0;transform:translateX(24px) translateY(12px) scale(.97)}}
 .fx-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,.065)}
 .fx-head-main{min-width:0}
 .fx-head-actions{display:flex;align-items:center;gap:7px;margin-left:12px;flex:0 0 auto}
@@ -1277,6 +1333,21 @@ body.desktop-shell.diy-mode #bottom-bar.stage-mode{left:50%;width:min(1080px,cal
 #playlist-panel::-webkit-scrollbar-thumb{background:rgba(var(--fc-accent-rgb),.20);border-radius:3px}
 .queue-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
 .queue-head-act{display:flex;align-items:center;gap:6px}
+.queue-head .playlist-fold-btn{opacity:0;transform:translateX(4px);transition:opacity .18s ease,transform .18s ease}
+.queue-head:hover .playlist-fold-btn,.playlist-fold-btn:focus-visible,.playlist-fold-btn.active{opacity:1;transform:translateX(0)}
+.playlist-fold-btn.active svg{transform:rotate(180deg)}
+.playlist-fold-btn svg{transition:transform .22s ease}
+#playlist-panel.queue-folded .panel-tabs,#playlist-panel.queue-folded #queue-pane,#playlist-panel.queue-folded #pl-pane,#playlist-panel.queue-folded #podcast-pane{display:none!important}
+#playlist-panel.queue-folded .queue-head{margin-bottom:0}
+#playlist-panel.queue-folded{max-width:240px;transition:max-width .26s ease}
+#pl-edge-toggle{position:fixed;z-index:16;left:0;top:50%;transform:translateY(-50%);width:22px;height:64px;display:none;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.09);border-left:0;border-radius:0 14px 14px 0;background:rgba(12,12,18,.55);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);color:rgba(224,250,255,.62);cursor:pointer;box-shadow:6px 0 22px rgba(0,0,0,.32);transition:left .55s cubic-bezier(.16,1,.3,1),background .18s,color .18s,width .18s}
+#pl-edge-toggle:hover{width:26px;color:#fff;background:rgba(20,20,28,.72)}
+#pl-edge-toggle svg{transition:transform .4s cubic-bezier(.16,1,.3,1)}
+#pl-edge-toggle.open{left:372px}
+#pl-edge-toggle.open svg{transform:rotate(180deg)}
+body:not(.empty-home-active) #pl-edge-toggle{display:flex}
+body.immersive-mode #pl-edge-toggle{display:none!important}
+#playlist-toggle-btn.active{color:#fff;background:rgba(var(--fc-accent-rgb),.14);border-color:rgba(var(--fc-accent-rgb),.34)}
 .playlist-pin-btn{width:30px;min-width:30px;flex:0 0 auto;padding:0}
 .playlist-pin-btn.active{border-color:rgba(var(--fc-accent-rgb),.38);background:rgba(var(--fc-accent-rgb),.10);color:#fff}
 .panel-tabs{display:flex;align-items:center;gap:8px;margin-bottom:10px}
@@ -1887,12 +1958,12 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 
   <!-- 主内容 -->
   <div class="splash-content">
-    <div class="splash-wordmark" id="splash-wordmark" aria-label="Mineradio">
-      <span class="splash-word-mine">Mine</span>
-      <span class="splash-word-radio" aria-label="radio">rad<span class="splash-word-i" aria-hidden="true"></span><span class="splash-word-o">o</span></span>
+    <div class="splash-wordmark" id="splash-wordmark" aria-label="Aurora Music">
+      <span class="splash-word-mine">Aurora</span>
+      <span class="splash-word-radio">Music</span>
     </div>
     <div class="splash-signal-line"></div>
-    <div class="splash-sub">private visual radio</div>
+    <div class="splash-sub">immersive visual player</div>
     <div class="splash-enter" aria-hidden="true">点击进入</div>
   </div>
 </div>
@@ -1928,12 +1999,20 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 </div>
 
 <!-- 空场 Home -->
-<section id="empty-home" aria-label="Mineradio home">
+<section id="empty-home" aria-label="Aurora Music home">
   <div class="empty-home-shell">
     <div class="home-hero">
-      <div class="home-hero-inner home-construction-inner">
-        <div class="home-title home-construction-title">🚧此处施工，敬请期待🚧</div>
-        <button class="home-chip home-console-chip" type="button" onclick="openHomePlayerConsole()">展开播放器控制台</button>
+      <div class="home-hero-inner home-account-inner">
+        <div class="home-kicker">ACCOUNTS · 我的账号</div>
+        <div class="home-account-row" id="home-account-row"></div>
+        <div class="home-daily-head">
+          <div class="home-daily-headtext">
+            <div class="home-daily-kicker">DAILY · 网易云每日推荐</div>
+            <div class="home-daily-h" id="home-daily-h">每日推荐</div>
+          </div>
+          <button class="home-chip home-daily-refresh-chip" id="home-daily-refresh2" type="button" onclick="refreshHomeDiscover(true)" title="刷新网易云每日推荐 (Alt+R)" aria-label="刷新每日推荐">刷新</button>
+        </div>
+        <div class="home-daily-list" id="home-daily-list"></div>
       </div>
     </div>
 
@@ -1949,6 +2028,9 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
         <div class="home-card-title" id="home-daily-title">每日推荐</div>
         <div class="home-card-sub" id="home-daily-sub">登录后同步你的今日歌曲</div>
         <div class="home-card-art" id="home-daily-art"></div>
+        <button class="home-card-refresh" id="home-daily-refresh" type="button" onclick="event.stopPropagation();refreshHomeDiscover(true);" title="刷新网易云每日推荐 (Alt+R)" aria-label="刷新网易云每日推荐">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+        </button>
       </button>
       <button class="home-card" data-home-tone="playlist" type="button" onclick="playHomeSong(1)">
         <div class="home-card-label">Song</div>
@@ -2005,7 +2087,12 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 <!-- 控制台 (右侧贴边自动显示, 无关闭按钮) -->
 <div id="fx-panel">
   <div class="fx-head">
-    <div><div class="fx-title">视觉控制台</div><div class="fx-sub">MINERADIO VISUALS · 鼠标移开自动隐藏</div></div>
+    <div><div class="fx-title">视觉控制台</div><div class="fx-sub">AURORA MUSIC VISUALS · 鼠标移开自动隐藏</div></div>
+    <div class="fx-head-act">
+      <button id="fx-pin-btn" class="fx-mini-btn ghost fx-pin-btn" onclick="toggleFxPanelPinned()" title="常开视觉控制台" aria-label="常开视觉控制台"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M5 15l4 4"/><path d="M14 4l-2 5-4 4-3 2 4 4 2-3 4-4 5-2z"/><path d="M9 19l-4 4"/></svg></button>
+      <button id="fx-fold-btn" class="fx-mini-btn ghost fx-fold-btn" onclick="toggleFxPanelFold()" title="折叠内容" aria-label="折叠内容"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button id="fx-close-btn" class="fx-mini-btn ghost fx-close-btn" onclick="toggleFxPanelShortcut()" title="收起视觉控制台" aria-label="收起视觉控制台"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg></button>
+    </div>
   </div>
 
   <div class="fx-section-label">视觉预设</div>
@@ -2267,6 +2354,8 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     <div><div class="fx-title">歌单 / 队列</div><div class="fx-sub">QUEUE · 鼠标移开自动隐藏</div></div>
     <div class="queue-head-act">
       <button id="playlist-pin-btn" class="fx-mini-btn ghost playlist-pin-btn" onclick="togglePlaylistPanelPinned()" title="常开歌单" aria-label="常开歌单"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M5 15l4 4"/><path d="M14 4l-2 5-4 4-3 2 4 4 2-3 4-4 5-2z"/><path d="M9 19l-4 4"/></svg></button>
+      <button id="playlist-close-btn" class="fx-mini-btn ghost playlist-close-btn" onclick="togglePlaylistPanelShortcut()" title="收起歌单 (P)" aria-label="收起歌单"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg></button>
+      <button id="playlist-fold-btn" class="fx-mini-btn ghost playlist-fold-btn" onclick="togglePlaylistPanelFold()" title="折叠内容" aria-label="折叠内容"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
       <button class="fx-mini-btn ghost" onclick="shuffleQueue()">随机</button>
     </div>
   </div>
@@ -2300,6 +2389,9 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     <div id="podcast-list"></div>
   </div>
 </div>
+<button id="pl-edge-toggle" type="button" onclick="togglePlaylistVisible()" title="展开歌单" aria-label="展开歌单">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+</button>
 
 <!-- 试听提醒 -->
 <div id="trial-banner">
@@ -2438,6 +2530,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     <button id="mini-queue-btn" class="ctrl-btn" onclick="toggleMiniQueue(event)" title="当前队列"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></button>
     </div>
     <div class="control-cluster modes">
+    <button id="playlist-toggle-btn" class="ctrl-btn" onclick="togglePlaylistVisible()" title="显示/隐藏歌单 (P)" aria-label="显示或隐藏歌单" aria-pressed="false"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h11"/><path d="M4 12h11"/><path d="M4 18h7"/><path d="M17 14v6"/><path d="M21 14l-4-2v8"/></svg></button>
     <button class="ctrl-btn lyrics-toggle-btn" onclick="toggleLyricsPanel()" title="歌词"><span class="lyrics-word-icon">词</span></button>
     <div id="volume-control" class="volume-control">
       <button id="volume-btn" class="ctrl-btn" onclick="toggleVolumePanel(event)" title="音量 / 静音"><svg id="volume-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15 9.5a4 4 0 0 1 0 5"/></svg></button>
@@ -2470,7 +2563,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
       <button id="login-provider-qq" class="qq" type="button" onclick="setLoginProvider('qq')">QQ 音乐</button>
     </div>
     <div class="login-intro">
-      <div class="login-intro-kicker">Mineradio</div>
+      <div class="login-intro-kicker">Aurora Music</div>
       <div class="login-intro-title">音乐播放器，也是一座视觉舞台</div>
       <div class="login-intro-body">搜索或导入一首歌即可播放；登录后会同步歌单、红心和播客，让封面、歌词和粒子跟着音乐动起来。</div>
     </div>
@@ -2619,7 +2712,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     <div class="update-panel-inner">
       <div class="update-panel-head">
         <div>
-          <div class="update-kicker">MINERADIO</div>
+          <div class="update-kicker">AURORA MUSIC</div>
           <div id="update-modal-title" class="update-title">New release</div>
           <div id="update-modal-version" class="update-version">v1.0.10</div>
         </div>
@@ -2736,7 +2829,10 @@ var HOTKEY_ACTIONS = [
   { key:'volumeUp', label:'音量增加', category:'音量', local:'ArrowUp', global:'Ctrl+Alt+ArrowUp' },
   { key:'volumeDown', label:'音量降低', category:'音量', local:'ArrowDown', global:'Ctrl+Alt+ArrowDown' },
   { key:'toggleFullscreen', label:'全屏', category:'窗口', local:'KeyF', global:'Ctrl+Alt+KeyF' },
-  { key:'toggleDesktopLyrics', label:'桌面歌词', category:'歌词', local:'Alt+KeyL', global:'Ctrl+Alt+KeyL' }
+  { key:'toggleDesktopLyrics', label:'桌面歌词', category:'歌词', local:'Alt+KeyL', global:'Ctrl+Alt+KeyL' },
+  { key:'togglePlaylistPanel', label:'歌单面板', category:'面板', local:'KeyP', global:'Ctrl+Alt+KeyP' },
+  { key:'toggleFxPanel', label:'视觉控制台', category:'面板', local:'F2', global:'Ctrl+Alt+F2' },
+  { key:'refreshDailyRecommend', label:'刷新每日推荐', category:'面板', local:'Alt+KeyR', global:'Ctrl+Alt+KeyR' }
 ];
 var hotkeyCaptureState = null;
 var hotkeyGlobalStatus = {};
@@ -2803,8 +2899,11 @@ var queueViewTab = 'queue', playMode = 'loop', miniQueueOpen = false;
 var miniQueueRenderSeq = 0, queueRenderSeq = 0, playlistRenderSeq = 0;
 var queuePanelDirty = false;
 var PLAYLIST_PANEL_BATCH_SIZE = 28;
+var QUEUE_PANEL_BATCH_SIZE = 40;
 var playlistPanelRenderLimit = PLAYLIST_PANEL_BATCH_SIZE;
 var playlistPanelLazyBound = false;
+var queuePanelRenderLimit = QUEUE_PANEL_BATCH_SIZE;
+var queuePanelLazyBound = false;
 var PLAYLIST_DETAIL_INITIAL_RENDER = 64;
 var PLAYLIST_DETAIL_BATCH_SIZE = 48;
 var smoothWheelScrollBound = false;
@@ -12235,7 +12334,7 @@ function updateLocalBeatModal() {
   var desc = document.getElementById('local-beat-desc');
   if (desc) desc.textContent = mode === 'dj'
     ? '适合 DJ、长混音或鼓点密集的本地音频，会使用更稳定的低频锁拍并进入 DJ 视觉驱动。'
-    : '适合普通歌曲和日常播放，会沿用 Mineradio 电影视角的综合节奏分析。';
+    : '适合普通歌曲和日常播放，会沿用 Aurora Music 电影视角的综合节奏分析。';
   var start = document.getElementById('local-beat-start-btn');
   var cancel = document.getElementById('local-beat-cancel-btn');
   var later = document.getElementById('local-beat-later-btn');
@@ -15555,6 +15654,7 @@ function renderHomeTiles() {
   renderHomeMosaic(tiles);
 }
 function renderHomeDiscover() {
+  if (typeof renderHomePanel === 'function') renderHomePanel();
   var sub = document.getElementById('home-subtitle');
   var loggedOutHome = !homeDiscoverState.loggedIn && !hasAnyPlatformLogin();
   var weather = homeWeatherRadioState.weather;
@@ -15564,7 +15664,7 @@ function renderHomeDiscover() {
   var weatherKicker = document.getElementById('home-weather-kicker');
   var weatherMeta = document.getElementById('home-weather-meta');
   if (weatherTitle) weatherTitle.textContent = '我的音乐库';
-  if (weatherKicker) weatherKicker.textContent = 'Mineradio · Your Library';
+  if (weatherKicker) weatherKicker.textContent = 'Aurora Music · Your Library';
   if (sub) {
     if (loggedOutHome) sub.textContent = '登录后会把你的歌单、常听歌手和最近播放放在这里；也可以直接搜索或导入本地音乐。';
     else sub.textContent = '从你的歌单、最近播放和常听歌手开始，天气电台放在需要氛围的时候再开。';
@@ -15622,8 +15722,13 @@ function renderHomeDiscover() {
     setHomeArt('home-profile-art', summary.topSong && summary.topSong.cover || summary.recent && summary.recent.cover, 280);
     setHomeArt('home-library-art', '', 280);
   } else {
-    if (dailyTitle) dailyTitle.textContent = daily ? daily.name : '每日推荐';
-    if (dailySub) dailySub.textContent = daily ? ((daily.artist || songSourceLabel(daily) || '今日歌曲') + ' · 点击播放今日队列') : '同步你的今日歌曲';
+    var neteaseLoggedIn = !!(loginStatus && loginStatus.loggedIn);
+    var dailyCount = homeDiscoverState.songs.length;
+    if (dailyTitle) dailyTitle.textContent = daily ? daily.name : '网易云每日推荐';
+    if (dailySub) {
+      if (daily) dailySub.textContent = (neteaseLoggedIn ? '网易云' : '今日') + ' · ' + dailyCount + ' 首 · 点击播放今日队列';
+      else dailySub.textContent = neteaseLoggedIn ? '同步网易云今日歌曲' : '同步你的今日歌曲';
+    }
     if (privateTitle) privateTitle.textContent = cardSongB ? cardSongB.name : '私人雷达';
     if (privateSub) privateSub.textContent = cardSongB ? (cardSongB.artist || songSourceLabel(cardSongB) || '推荐歌曲') : (homeDiscoverState.songs.length + ' 首 · 根据今日推荐与常听偏好');
     if (libTitle) libTitle.textContent = cardSongC ? cardSongC.name : (summary.topArtist ? summary.topArtist.name : '更多歌曲');
@@ -15902,6 +16007,88 @@ function openHomePlayerConsole() {
   if (controlsAutoHide) scheduleControlsHide(1800);
   showToast('播放器控制台已展开');
 }
+function renderHomeAccountCard(provider) {
+  var st = (typeof platformStatus === 'function') ? platformStatus(provider) : null;
+  var meta = (typeof platformMeta === 'function') ? platformMeta(provider) : { short: provider === 'qq' ? 'QQ' : 'NE', label: provider === 'qq' ? 'QQ 音乐' : '网易云音乐' };
+  var tagCls = provider === 'qq' ? 'qq' : 'netease';
+  var avatar = (typeof providerAvatarSrc === 'function') ? providerAvatarSrc(provider, st || {}) : '';
+  var loggedIn = !!(st && st.loggedIn);
+  if (!loggedIn) {
+    return '<button class="home-account-card logged-out" type="button" onclick="showLoginModal({provider:\'' + provider + '\'})" title="登录' + escHtml(meta.label) + '">' +
+      '<img class="home-account-avatar" src="' + avatar + '" alt="">' +
+      '<span class="home-account-meta"><span class="home-account-name">' + escHtml(meta.label) + '</span>' +
+      '<span class="home-account-sub">点击登录，同步歌单与每日推荐</span></span>' +
+      '<span class="home-account-platform ' + tagCls + '">登录</span>' +
+    '</button>';
+  }
+  var name = (provider === 'qq' && st.preview) ? '待接入' : (st.nickname || meta.label);
+  var vip = (typeof providerVipBadge === 'function') ? providerVipBadge(provider, st) : '';
+  var sub = (provider === 'qq') ? 'QQ 音乐已登录' : '网易云音乐已登录';
+  if (st.userId) sub += ' · ID ' + escHtml(String(st.userId));
+  return '<button class="home-account-card" type="button" onclick="showUserModal()" title="查看账号">' +
+    '<img class="home-account-avatar" src="' + avatar + '" alt="">' +
+    '<span class="home-account-meta"><span class="home-account-name">' + escHtml(name) + vip + '</span>' +
+    '<span class="home-account-sub">' + sub + '</span></span>' +
+    '<span class="home-account-platform ' + tagCls + '">' + escHtml(meta.short) + '</span>' +
+  '</button>';
+}
+function renderHomePanel() {
+  var row = document.getElementById('home-account-row');
+  if (row) {
+    row.innerHTML = renderHomeAccountCard('netease') + renderHomeAccountCard('qq');
+  }
+  var list = document.getElementById('home-daily-list');
+  var head = document.getElementById('home-daily-h');
+  if (!list) return;
+  var songs = (homeDiscoverState && Array.isArray(homeDiscoverState.songs)) ? homeDiscoverState.songs : [];
+  var neteaseLoggedIn = !!(loginStatus && loginStatus.loggedIn);
+  if (head) head.textContent = neteaseLoggedIn ? '网易云每日推荐' : '每日推荐';
+  if (!songs.length) {
+    if (homeDiscoverState && homeDiscoverState.loading) {
+      list.innerHTML = '<div class="home-daily-empty">正在获取每日推荐…</div>';
+    } else if (!neteaseLoggedIn) {
+      list.innerHTML = '<div class="home-daily-empty">登录网易云后同步你的今日推荐<br><button class="home-chip" type="button" onclick="showLoginModal({provider:\'netease\'})">登录网易云</button></div>';
+    } else {
+      list.innerHTML = '<div class="home-daily-empty">暂无推荐，点右上角「刷新」试试<br><button class="home-chip" type="button" onclick="refreshHomeDiscover(true)">刷新推荐</button></div>';
+    }
+    return;
+  }
+  var playIcon = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  var html = '';
+  for (var i = 0; i < songs.length; i++) {
+    var s = songs[i] || {};
+    var cover = s.cover ? (typeof coverUrlWithSize === 'function' ? coverUrlWithSize(s.cover, 80) : s.cover) : '';
+    var coverHtml = cover
+      ? '<img class="home-daily-cover" src="' + (typeof coverProxySrc === 'function' ? coverProxySrc(cover) : cover) + '" alt="" loading="lazy">'
+      : '<span class="home-daily-cover"></span>';
+    html += '<div class="home-daily-row" role="button" tabindex="0" onclick="playHomeDailySong(' + i + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();playHomeDailySong(' + i + ');}" title="' + escHtml((s.name || '') + (s.artist ? ' - ' + s.artist : '')) + '">' +
+      '<span class="home-daily-idx">' + (i + 1) + '</span>' +
+      coverHtml +
+      '<span class="home-daily-info"><span class="home-daily-name">' + escHtml(s.name || '未知歌曲') + '</span>' +
+      '<span class="home-daily-artist">' + escHtml(s.artist || '未知歌手') + '</span></span>' +
+      '<span class="home-daily-play" aria-hidden="true">' + playIcon + '</span>' +
+    '</div>';
+  }
+  list.innerHTML = html;
+  list._homeDailySongs = songs.slice();
+}
+function playHomeDailySong(index) {
+  var listEl = document.getElementById('home-daily-list');
+  var songs = (listEl && Array.isArray(listEl._homeDailySongs) && listEl._homeDailySongs.length)
+    ? listEl._homeDailySongs
+    : ((homeDiscoverState && Array.isArray(homeDiscoverState.songs)) ? homeDiscoverState.songs : []);
+  var song = songs[index];
+  if (!song) return;
+  homeForcedOpen = false;
+  homeSuppressed = false;
+  setHomeControlsLocked(false);
+  playQueue = songs.map(cloneSong);
+  currentIdx = Math.max(0, Math.min(playQueue.length - 1, index));
+  safeRenderQueuePanel('home-daily-card');
+  safeShelfRebuild('home-daily-card', true);
+  forcePlaybackControlsInteractive();
+  playQueueAt(currentIdx).catch(function(e){ console.warn('[HomeDailyPlay]', e); });
+}
 function ensureHomeWallpaperParticles(opts) {
   opts = opts || {};
   if (uniforms && uniforms.uAlpha && opts.instant) {
@@ -16048,6 +16235,11 @@ async function playHomeDaily() {
   safeRenderQueuePanel('home-daily');
   safeShelfRebuild('home-daily', true);
   forcePlaybackControlsInteractive();
+  if (!playlistPanelPinned) {
+    setPlaylistPanelPinned(true, true);
+    var panel = document.getElementById('playlist-panel');
+    if (panel) setPeek(panel, true, 'pl');
+  }
   playQueueAt(0).catch(function(e){ console.warn('[HomeDailyPlay]', e); });
 }
 async function playHomePrivateRadio() {
@@ -16093,6 +16285,11 @@ function playHomeSong(index) {
   safeRenderQueuePanel('home-song-card');
   safeShelfRebuild('home-song-card', true);
   forcePlaybackControlsInteractive();
+  if (index === 0 && !playlistPanelPinned) {
+    setPlaylistPanelPinned(true, true);
+    var panel = document.getElementById('playlist-panel');
+    if (panel) setPeek(panel, true, 'pl');
+  }
   playQueueAt(currentIdx).catch(function(e){ console.warn('[HomeSongPlay]', e); });
 }
 function openHomePlaylist(index) {
@@ -19263,7 +19460,6 @@ function togglePlaylistPanel(force) {
   else if (force === true) el.classList.add('show');
   else el.classList.toggle('show');
   if (el.classList.contains('show')) {
-    if (window.gsap) window.gsap.fromTo(el, { x: -12, autoAlpha: 0.92 }, { x: 0, autoAlpha: 1, duration: 0.22, ease: 'power2.out', overwrite: true });
     scheduleUiWarmTask(function(){
       flushDeferredQueuePanel('playlist-panel-open');
       if (!playQueue.length && queueViewTab === 'queue') switchPlaylistTab('playlists');
@@ -19272,6 +19468,68 @@ function togglePlaylistPanel(force) {
       else if (queueViewTab === 'playlists') animateVisiblePanelList(document.getElementById('pl-list'), '.pl-card', el);
       else animateVisiblePanelList(document.getElementById('podcast-list'), '.pl-card', el);
     }, 180);
+  }
+}
+function togglePlaylistPanelShortcut() {
+  var el = document.getElementById('playlist-panel');
+  if (!el) return;
+  var wasPinned = !!playlistPanelPinned;
+  setPlaylistPanelPinned(!wasPinned);
+  if (!wasPinned) {
+    el.classList.add('show');
+    setPeek(el, true, 'pl');
+    showToast('歌单面板已常开');
+  } else {
+    el.classList.remove('show');
+    setPeek(el, false, 'pl');
+    showToast('歌单面板已收起');
+  }
+}
+function togglePlaylistPanelFold() {
+  var el = document.getElementById('playlist-panel');
+  if (!el) return;
+  var folded = el.classList.toggle('queue-folded');
+  var btn = document.getElementById('playlist-fold-btn');
+  if (btn) {
+    btn.classList.toggle('active', folded);
+    btn.title = folded ? '展开歌单内容' : '折叠歌单内容';
+  }
+  showToast(folded ? '歌单内容已折叠' : '歌单内容已展开');
+}
+async function refreshHomeDiscover(force) {
+  if (!homeDiscoverState) return;
+  var btn = document.getElementById('home-daily-refresh');
+  if (btn) btn.classList.add('spinning');
+  var neteaseLoggedIn = !!(loginStatus && loginStatus.loggedIn);
+  if (force !== false && neteaseLoggedIn) {
+    showToast('正在刷新网易云每日推荐…');
+    try {
+      homeDiscoverState.loading = true;
+      renderHomeDiscover();
+      var data = await apiJson('/api/netease/daily-recommend?t=' + Date.now());
+      if (data && data.ok && Array.isArray(data.songs) && data.songs.length) {
+        homeDiscoverState.songs = data.songs.map(cloneSong);
+        homeDiscoverState.updatedAt = Number(data.updatedAt) || Date.now();
+        homeDiscoverState.loaded = true;
+        showToast('网易云每日推荐已刷新，共 ' + data.songs.length + ' 首');
+      } else {
+        showToast('刷新失败，已显示上次推荐');
+      }
+    } catch (e) {
+      console.warn('[refreshHomeDiscover]', e);
+      showToast('刷新失败，已显示上次推荐');
+    } finally {
+      homeDiscoverState.loading = false;
+      renderHomeDiscover();
+      if (btn) btn.classList.remove('spinning');
+    }
+  } else {
+    showToast(force === false ? '已加载本地推荐' : '正在刷新每日推荐…');
+    try {
+      await loadHomeDiscover(true);
+    } finally {
+      if (btn) btn.classList.remove('spinning');
+    }
   }
 }
 function applyPlaylistPanelPinState(openPanel) {
@@ -19289,11 +19547,37 @@ function applyPlaylistPanelPinState(openPanel) {
     btn.title = playlistPanelPinned ? '取消常开歌单' : '常开歌单';
   }
 }
+function syncPlaylistToggleButtons() {
+  var on = !!playlistPanelPinned;
+  var bb = document.getElementById('playlist-toggle-btn');
+  if (bb) { bb.classList.toggle('active', on); bb.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  var edge = document.getElementById('pl-edge-toggle');
+  if (edge) {
+    edge.classList.toggle('open', on);
+    edge.title = on ? '收起歌单' : '展开歌单';
+    edge.setAttribute('aria-label', edge.title);
+  }
+}
+function togglePlaylistVisible() {
+  var el = document.getElementById('playlist-panel');
+  if (!el) return;
+  var wasPinned = !!playlistPanelPinned;
+  setPlaylistPanelPinned(!wasPinned);
+  if (!wasPinned) {
+    el.classList.add('show');
+    if (typeof setPeek === 'function') setPeek(el, true, 'pl');
+  } else {
+    el.classList.remove('show');
+    if (typeof setPeek === 'function') setPeek(el, false, 'pl');
+  }
+  syncPlaylistToggleButtons();
+}
 function setPlaylistPanelPinned(on, silent) {
   playlistPanelPinned = !!on;
   saveBooleanPreference(PLAYLIST_PANEL_PIN_STORE_KEY, playlistPanelPinned);
   applyPlaylistPanelPinState(playlistPanelPinned);
   if (!silent) showToast(playlistPanelPinned ? '左侧歌单已常开' : '左侧歌单已恢复自动隐藏');
+  if (typeof syncPlaylistToggleButtons === 'function') syncPlaylistToggleButtons();
 }
 function togglePlaylistPanelPinned() {
   setPlaylistPanelPinned(!playlistPanelPinned);
@@ -19395,12 +19679,19 @@ function renderQueuePanel(opts) {
   var seq = ++queueRenderSeq;
   if (!playQueue.length) {
     $ql.innerHTML = '<div style="text-align:center;padding:24px 0;color:rgba(255,255,255,.32);font-size:11.5px">队列为空，搜索后点 + 设为下一首</div>';
+    queuePanelRenderLimit = QUEUE_PANEL_BATCH_SIZE;
     renderMiniQueuePanel();
     var panel = document.getElementById('playlist-panel');
     if (panel && (panel.classList.contains('show') || panel.classList.contains('peek')) && queueViewTab === 'queue') switchPlaylistTab('playlists');
     return;
   }
-  $ql.innerHTML = playQueue.map(function(song, i){
+  if (opts.reset) queuePanelRenderLimit = QUEUE_PANEL_BATCH_SIZE;
+  queuePanelRenderLimit = Math.max(QUEUE_PANEL_BATCH_SIZE, Math.min(playQueue.length, queuePanelRenderLimit || QUEUE_PANEL_BATCH_SIZE));
+  var visibleCount = queuePanelRenderLimit;
+  var visibleSongs = playQueue.slice(0, visibleCount);
+  var frag = document.createDocumentFragment();
+  var tmp = document.createElement('div');
+  tmp.innerHTML = visibleSongs.map(function(song, i){
     var thumb = songCoverSrc(song, 60);
     var imgTag = thumb ? '<img src="' + thumb + '" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0.2">' : '<div style="width:38px;height:38px;border-radius:6px;background:rgba(255,255,255,.06);flex-shrink:0"></div>';
     return '<div class="queue-item' + (i === currentIdx ? ' now' : '') + '" onclick="playQueueAt(' + i + ')">' +
@@ -19414,8 +19705,31 @@ function renderQueuePanel(opts) {
       '</div>' +
     '</div>';
   }).join('');
+  while (tmp.firstChild) frag.appendChild(tmp.firstChild);
+  $ql.innerHTML = '';
+  $ql.appendChild(frag);
+  if (playQueue.length > visibleCount) {
+    $ql.insertAdjacentHTML('beforeend', '<button type="button" class="fx-mini-btn ghost pl-load-more" data-queue-load-more="1">加载更多 ' + visibleCount + '/' + playQueue.length + '</button>');
+  }
   if (opts.animate && seq === queueRenderSeq) animateVisiblePanelList($ql, '.queue-item', document.getElementById('playlist-panel'), '.queue-item.now');
   renderMiniQueuePanel({ scrollCurrent: miniQueueOpen });
+}
+function resetQueuePanelRenderLimit() {
+  queuePanelRenderLimit = QUEUE_PANEL_BATCH_SIZE;
+}
+function growQueuePanelRenderLimit() {
+  if (!playQueue.length) return;
+  var next = Math.min(playQueue.length, (queuePanelRenderLimit || QUEUE_PANEL_BATCH_SIZE) + QUEUE_PANEL_BATCH_SIZE);
+  if (next <= queuePanelRenderLimit) return;
+  queuePanelRenderLimit = next;
+  renderQueuePanel({ animate: false });
+}
+function maybeGrowQueuePanelRenderLimit() {
+  var panel = document.getElementById('playlist-panel');
+  if (!panel || queueViewTab !== 'queue' || queuePanelRenderLimit >= playQueue.length) return;
+  if (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 240) {
+    growQueuePanelRenderLimit();
+  }
 }
 async function refreshUserPlaylists(force) {
   if (!loginStatus.loggedIn && !qqLoginStatus.loggedIn) {
@@ -19623,9 +19937,12 @@ function bindPlaylistPanelLazyRender() {
   var panel = document.getElementById('playlist-panel');
   if (!panel || playlistPanelLazyBound) return;
   playlistPanelLazyBound = true;
+  queuePanelLazyBound = true;
   panel.addEventListener('scroll', function(){
     maybeGrowPlaylistPanelDetailRenderLimit();
-    if (queueViewTab !== 'playlists' || playlistPanelRenderLimit >= userPlaylists.length) return;
+    maybeGrowQueuePanelRenderLimit();
+    if (queueViewTab === 'queue') return;
+    if (playlistPanelRenderLimit >= userPlaylists.length) return;
     if (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 180) growPlaylistPanelRenderLimit();
   }, { passive: true });
 }
@@ -19702,6 +20019,13 @@ document.getElementById('pl-list').addEventListener('click', function(e){
     e.preventDefault();
     e.stopPropagation();
     growPlaylistPanelRenderLimit();
+    return;
+  }
+  var queueLoadMore = e.target && e.target.closest ? e.target.closest('[data-queue-load-more]') : null;
+  if (queueLoadMore) {
+    e.preventDefault();
+    e.stopPropagation();
+    growQueuePanelRenderLimit();
     return;
   }
   var detailLoadMore = e.target && e.target.closest ? e.target.closest('[data-pl-detail-load-more]') : null;
@@ -20539,7 +20863,7 @@ function userFxArchiveExportPayload(slot) {
   };
 }
 function safeArchiveFileName(name) {
-  return String(name || 'Mineradio 用户存档').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 48) + '.json';
+  return String(name || 'Aurora Music 用户存档').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 48) + '.json';
 }
 function exportUserFxArchive(index) {
   var slot = userFxArchiveAt(index);
@@ -21903,6 +22227,9 @@ function executeHotkeyAction(actionKey, source) {
   if (actionKey === 'volumeDown') return adjustVolumeByKeyboard(-0.05);
   if (actionKey === 'toggleFullscreen') return toggleFullscreen();
   if (actionKey === 'toggleDesktopLyrics') return toggleFx('desktopLyrics');
+  if (actionKey === 'togglePlaylistPanel') return togglePlaylistPanelShortcut();
+  if (actionKey === 'toggleFxPanel') return toggleFxPanelShortcut();
+  if (actionKey === 'refreshDailyRecommend') return refreshHomeDiscover(true);
 }
 function handleConfiguredLocalHotkey(e) {
   if (!hotkeySettings || !hotkeySettings.local || isTypingTarget(e.target)) return false;
@@ -21958,7 +22285,7 @@ function ensureHotkeyModal() {
   modal.innerHTML =
     '<div class="hotkey-dialog" role="dialog" aria-modal="true" aria-label="热键设置">' +
       '<div class="hotkey-head">' +
-        '<div><div class="hotkey-title">热键设置</div><div class="hotkey-sub">局内热键只在 Mineradio 窗口内生效；全局热键会向系统注册，并检测是否被占用。</div></div>' +
+        '<div><div class="hotkey-title">热键设置</div><div class="hotkey-sub">局内热键只在 Aurora Music 窗口内生效；全局热键会向系统注册，并检测是否被占用。</div></div>' +
         '<button class="hotkey-close" type="button" data-hotkey-close aria-label="关闭">×</button>' +
       '</div>' +
       '<div class="hotkey-toolbar">' +
@@ -21983,7 +22310,7 @@ function ensureHotkeyModal() {
 }
 function hotkeyStatusMarkup(scope, actionKey, binding, duplicate) {
   if (!binding) return '<span class="hotkey-status">未设置</span>';
-  if (duplicate && duplicate[binding] > 1) return '<span class="hotkey-status conflict"><span class="source-icon">!</span>Mineradio 内部重复</span>';
+  if (duplicate && duplicate[binding] > 1) return '<span class="hotkey-status conflict"><span class="source-icon">!</span>Aurora Music 内部重复</span>';
   if (scope === 'local') return '<span class="hotkey-status ok">可用</span>';
   var status = hotkeyGlobalStatus[actionKey];
   if (!status) return '<span class="hotkey-status">待检测</span>';
@@ -22436,7 +22763,65 @@ function toggleFxPanel(force) {
     return;
   }
   el.classList.remove('show', 'closing');
+  el.classList.add('entering');
+  var onEnterEnd = function(ev){
+    if (ev && ev.target !== el) return;
+    el.classList.remove('entering');
+    el.removeEventListener('animationend', onEnterEnd);
+  };
+  el.addEventListener('animationend', onEnterEnd);
   setPeek(el, true, 'fx');
+}
+function setFxPanelPinned(on) {
+  fxPanelPinned = !!on;
+  var el = document.getElementById('fx-panel');
+  var btn = document.getElementById('fx-pin-btn');
+  if (el) {
+    el.classList.toggle('pinned', fxPanelPinned);
+    if (fxPanelPinned) {
+      setPeek(el, true, 'fx');
+    } else if (!el.classList.contains('show')) {
+      setPeek(el, false, 'fx');
+    }
+  }
+  if (btn) {
+    btn.classList.toggle('active', fxPanelPinned);
+    btn.title = fxPanelPinned ? '取消常开视觉控制台' : '常开视觉控制台';
+  }
+}
+function toggleFxPanelPinned() {
+  setFxPanelPinned(!fxPanelPinned);
+  showToast(fxPanelPinned ? '视觉控制台已常开' : '视觉控制台已恢复自动隐藏');
+}
+function toggleFxPanelShortcut() {
+  var el = document.getElementById('fx-panel');
+  if (!el) return;
+  if (!diyPlayerMode) {
+    showToast('开启 DIY 玩家模式后可切换视觉控制台');
+    return;
+  }
+  var wasPinned = !!fxPanelPinned;
+  setFxPanelPinned(!wasPinned);
+  if (!wasPinned) {
+    el.classList.add('show');
+    setPeek(el, true, 'fx');
+    showToast('视觉控制台已常开');
+  } else {
+    el.classList.remove('show');
+    setPeek(el, false, 'fx');
+    showToast('视觉控制台已收起');
+  }
+}
+function toggleFxPanelFold() {
+  var el = document.getElementById('fx-panel');
+  if (!el) return;
+  var folded = el.classList.toggle('fx-folded');
+  var btn = document.getElementById('fx-fold-btn');
+  if (btn) {
+    btn.classList.toggle('active', folded);
+    btn.title = folded ? '展开视觉控制台内容' : '折叠视觉控制台内容';
+  }
+  showToast(folded ? '视觉控制台内容已折叠' : '视觉控制台内容已展开');
 }
 function resetFx() {
   var savedCam = fx.cam;
@@ -22804,7 +23189,7 @@ function syncUpdatePreviewStateClass() {
   if (foot) {
     if (isDownloading) foot.textContent = (updatePreviewState.message || (isPatch ? '正在下载快速补丁' : '正在下载完整安装包')) + (updateProgressDetailText() ? ' · ' + updateProgressDetailText() : '');
     else if (isError) foot.textContent = '下载失败：' + (updatePreviewState.errorReason || updatePreviewState.errorDetail || updatePreviewState.message || '请稍后重试') + (updatePreviewState.failedAttempts && updatePreviewState.failedAttempts.length ? ' · 已尝试 ' + updatePreviewState.failedAttempts.length + ' 条线路' : '');
-    else if (isReady && isPatch) foot.textContent = updatePreviewState.restartRequired ? '快速补丁已应用，重启 Mineradio 后生效。' : '快速补丁已应用。';
+    else if (isReady && isPatch) foot.textContent = updatePreviewState.restartRequired ? '快速补丁已应用，重启 Aurora Music 后生效。' : '快速补丁已应用。';
     else if (isReady) foot.textContent = updatePreviewState.cached ? '已复用上次校验通过的安装包，不会重复下载。' : '安装包已准备好，点击按钮后再打开安装。';
     else if (updatePreviewState.patchAvailable) foot.textContent = '优先使用轻量补丁，只更新缺失或变更的资源文件；不适用时可下载完整安装包。';
     else foot.textContent = updatePreviewState.updateAvailable ? '没有可用快速补丁时会下载完整安装包。' : '当前版本已是最新。';
@@ -23062,7 +23447,7 @@ async function restartForAppliedPatch() {
       return;
     }
   } catch (e) {}
-  showToast('请手动重启 Mineradio 让补丁生效');
+  showToast('请手动重启 Aurora Music 让补丁生效');
 }
 
 async function openDownloadedUpdateInstaller(filePath) {
@@ -23390,6 +23775,7 @@ function startQQLoginStatusAutoRefresh() {
   }, 45000);
 }
 function renderUserBtn() {
+  if (typeof renderHomePanel === 'function') renderHomePanel();
   var btn = document.getElementById('user-btn');
   if (!btn) return;
   btn.classList.remove('multi-account');
@@ -23513,18 +23899,30 @@ async function refreshQr() {
     }
     return;
   }
+  var qrStatus = document.getElementById('qr-status');
+  if (qrStatus) { qrStatus.textContent = '正在获取二维码…'; qrStatus.className = 'preview'; }
+  var k = null, kErr = null;
+  for (var attempt = 0; attempt < 3; attempt++) {
+    try {
+      k = await apiJson('/api/login/qr/key?t=' + Date.now());
+      if (k && k.key) { kErr = null; break; }
+      kErr = new Error((k && k.error) ? ('服务端: ' + k.error) : '获取 key 失败');
+    } catch (e) { kErr = e; }
+    if (attempt < 2) await new Promise(function(r){ setTimeout(r, 700 * (attempt + 1)); });
+  }
+  if (kErr || !k || !k.key) {
+    if (qrStatus) { qrStatus.textContent = '出错: ' + (kErr ? kErr.message : '获取 key 失败') + ' (点刷新重试)'; qrStatus.className = 'fail'; }
+    return;
+  }
   try {
-    var k = await apiJson('/api/login/qr/key');
-    if (!k.key) throw new Error('获取 key 失败');
     qrKey = k.key;
     var q = await apiJson('/api/login/qr/create?key=' + encodeURIComponent(qrKey));
     if (!q.img) throw new Error('生成二维码失败');
     document.getElementById('qr-img').src = q.img;
-    document.getElementById('qr-status').textContent = '请使用网易云音乐 App 扫码';
+    if (qrStatus) { qrStatus.textContent = '请使用网易云音乐 App 扫码'; qrStatus.className = ''; }
     startQrPoll();
   } catch (e) {
-    document.getElementById('qr-status').textContent = '出错: ' + e.message;
-    document.getElementById('qr-status').className = 'fail';
+    if (qrStatus) { qrStatus.textContent = '出错: ' + e.message; qrStatus.className = 'fail'; }
   }
 }
 function startQrPoll() { if (qrPollTimer) clearInterval(qrPollTimer); qrPollTimer = setInterval(checkQr, 2000); }
@@ -24444,7 +24842,7 @@ var visualGuideSteps = [
   {
     target: 'stage',
     kicker: '01 / Welcome',
-    title: 'Mineradio 是用来听歌的视觉播放器',
+    title: 'Aurora Music 是用来听歌的视觉播放器',
     body: '它不是单纯歌单页：搜索或导入一首歌后，封面、歌词、粒子和镜头会跟着音乐一起动。'
   },
   {
@@ -26107,7 +26505,7 @@ function markSplashReadyToEnter() {
   s.classList.add('ready');
   s.setAttribute('role', 'button');
   s.setAttribute('tabindex', '0');
-  s.setAttribute('aria-label', '点击进入 Mineradio');
+  s.setAttribute('aria-label', '点击进入 Aurora Music');
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -26151,7 +26549,7 @@ function currentDesktopSongMeta() {
   var song = playQueue && currentIdx >= 0 ? playQueue[currentIdx] : null;
   song = song || currentLyricSong && currentLyricSong() || {};
   return {
-    title: song.name || song.title || 'Mineradio',
+    title: song.name || song.title || 'Aurora Music',
     artist: song.artist || song.ar || song.author || '',
     cover: (typeof songCoverSrc === 'function' && song) ? (songCoverSrc(song, 360) || song.cover || '') : (song.cover || '')
   };
@@ -26197,7 +26595,7 @@ function currentDesktopLyricSnapshot() {
       progressSpan: 4.8
     };
   }
-  return { text: normalizeDesktopLyricText(currentDesktopSongMeta().title || 'Mineradio'), progress: 0, progressSpan: 4.8 };
+  return { text: normalizeDesktopLyricText(currentDesktopSongMeta().title || 'Aurora Music'), progress: 0, progressSpan: 4.8 };
 }
 function desktopOverlayColorValue(value, fallback) {
   var raw = String(value || '').trim();
@@ -26519,6 +26917,8 @@ applyWallpaperModeState(false);
 setShelfMode(fx.shelf);
 applyStartupStarfieldPreset();
 applyPlaylistPanelPinState(false);
+renderHomePanel();
+syncPlaylistToggleButtons();
 if (fx.floatLayer) createFloatLayer();
 if (fx.particleLyrics) createLyricsParticles();
 if (fx.backCover) createBackCoverLayer();

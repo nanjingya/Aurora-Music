@@ -49,4 +49,7 @@ contextBridge.exposeInMainWorld('desktopWindow', {
 window.addEventListener('DOMContentLoaded', () => {
   document.documentElement.classList.add('desktop-shell-root');
   document.body.classList.add('desktop-shell');
+  const platform = process.platform;
+  document.body.classList.add('platform-' + platform);
+  document.body.dataset.platform = platform;
 });
