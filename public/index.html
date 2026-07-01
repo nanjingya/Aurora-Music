@@ -249,7 +249,8 @@ body.home-wallpaper-preview #canvas-container{filter:none}
 .home-hero::after{content:'';position:absolute;left:28px;right:28px;bottom:22px;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--home-accent) 0%,transparent),color-mix(in srgb,var(--home-accent) 52%,transparent),rgba(36,66,255,.24),rgba(248,244,238,.18),color-mix(in srgb,var(--home-accent) 0%,transparent));opacity:.82;pointer-events:none}
 .home-hero-inner{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(150px,.64fr);grid-template-rows:auto auto auto auto minmax(150px,1fr);column-gap:18px}
 .home-hero-inner.home-construction-inner{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:18px;padding:4px 2px;min-height:100%}
-.home-hero-inner.home-account-inner{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:2px 2px;min-height:100%}
+.home-hero-inner.home-account-inner{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:2px 2px;min-height:0;height:100%}
+.home-hero-inner.home-account-inner .home-daily-list{flex:1 1 auto;min-height:0}
 .home-account-inner .home-kicker{margin-bottom:12px}
 .home-account-row{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
 .home-account-card{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:16px;border:1px solid rgba(255,255,255,.085);background:rgba(255,255,255,.040);cursor:pointer;transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;text-align:left}
@@ -282,6 +283,11 @@ body.home-wallpaper-preview #canvas-container{filter:none}
 .home-daily-row .home-daily-play{width:26px;height:26px;flex:0 0 auto;border-radius:50%;border:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--home-accent) 16%,rgba(255,255,255,.06));color:#fff;opacity:0;transition:opacity .16s,transform .16s}
 .home-daily-row:hover .home-daily-play{opacity:1}
 .home-daily-row .home-daily-play svg{width:12px;height:12px;fill:currentColor}
+.home-daily-row.is-vip .home-daily-name{opacity:.62}
+.home-daily-row.is-vip:hover .home-daily-name{opacity:1}
+.home-daily-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:5px;font-size:9px;font-weight:800;letter-spacing:.4px;vertical-align:1px;line-height:1.4;background:rgba(244,210,138,.18);color:#f4d28a;border:1px solid rgba(244,210,138,.32);text-transform:uppercase}
+.home-daily-badge.vip{background:linear-gradient(135deg,#ff7a90,#f4b04a);color:#1a1206;border-color:transparent;box-shadow:0 4px 10px rgba(255,122,144,.18)}
+.home-daily-badge.album{background:rgba(122,215,194,.16);color:#7ad7c2;border-color:rgba(122,215,194,.32)}
 .home-daily-empty{padding:30px 12px;text-align:center;color:rgba(255,255,255,.38);font-size:12px;line-height:1.6}
 .home-daily-empty .home-chip{margin-top:12px}
 .home-kicker{grid-column:1;font-size:10px;font-weight:780;letter-spacing:.18em;color:color-mix(in srgb,var(--home-accent) 62%,rgba(255,255,255,.36));text-transform:uppercase;margin-bottom:14px}
@@ -16061,10 +16067,17 @@ function renderHomePanel() {
     var coverHtml = cover
       ? '<img class="home-daily-cover" src="' + (typeof coverProxySrc === 'function' ? coverProxySrc(cover) : cover) + '" alt="" loading="lazy">'
       : '<span class="home-daily-cover"></span>';
-    html += '<div class="home-daily-row" role="button" tabindex="0" onclick="playHomeDailySong(' + i + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();playHomeDailySong(' + i + ');}" title="' + escHtml((s.name || '') + (s.artist ? ' - ' + s.artist : '')) + '">' +
+    var fee = Number(s.fee || 0);
+    var badgeHtml = '';
+    if (fee >= 8) badgeHtml = '<span class="home-daily-badge vip">VIP</span>';
+    else if (fee === 4) badgeHtml = '<span class="home-daily-badge album">专辑</span>';
+    var tipParts = [(s.name || '')];
+    if (s.artist) tipParts.push(s.artist);
+    if (fee >= 8) tipParts.push('⚠️ VIP/试听');
+    html += '<div class="home-daily-row' + (fee >= 8 ? ' is-vip' : '') + '" role="button" tabindex="0" onclick="playHomeDailySong(' + i + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();playHomeDailySong(' + i + ');}" title="' + escHtml(tipParts.join(' - ')) + '">' +
       '<span class="home-daily-idx">' + (i + 1) + '</span>' +
       coverHtml +
-      '<span class="home-daily-info"><span class="home-daily-name">' + escHtml(s.name || '未知歌曲') + '</span>' +
+      '<span class="home-daily-info"><span class="home-daily-name">' + escHtml(s.name || '未知歌曲') + badgeHtml + '</span>' +
       '<span class="home-daily-artist">' + escHtml(s.artist || '未知歌手') + '</span></span>' +
       '<span class="home-daily-play" aria-hidden="true">' + playIcon + '</span>' +
     '</div>';
@@ -16376,7 +16389,9 @@ function isPointNearHomeContent(x, y) {
   var selectors = [
     '.home-card',
     '.home-tile',
-    '.home-chip'
+    '.home-chip',
+    '.home-daily-row',
+    '.home-account-card'
   ];
   for (var i = 0; i < selectors.length; i++) {
     var nodes = document.querySelectorAll(selectors[i]);
