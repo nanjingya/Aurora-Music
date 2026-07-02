@@ -17,8 +17,6 @@ Aurora Music 是一款沉浸式桌面音乐播放器，基于 Electron + Node.js
 
 ## Homebrew 安装（推荐）
 
-### 个人 Tap（已可用）
-
 ```bash
 brew tap nanjingya/tap
 brew trust nanjingya/tap
@@ -27,16 +25,6 @@ brew install --cask aurora-music
 
 - Apple Silicon 自动安装 **arm64** 包，Intel Mac 自动安装 **x64** 包
 - Tap 仓库：[nanjingya/homebrew-tap](https://github.com/nanjingya/homebrew-tap)
-
-### 官方 Homebrew Cask（审核中）
-
-已向官方仓库提交 PR，合并后可直接：
-
-```bash
-brew install --cask aurora-music
-```
-
-- PR：[Homebrew/homebrew-cask#272758](https://github.com/Homebrew/homebrew-cask/pull/272758)
 
 ### 升级
 
