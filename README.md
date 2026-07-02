@@ -36,7 +36,7 @@ brew install --cask aurora-music
 brew install --cask aurora-music
 ```
 
-- PR：[Homebrew/homebrew-cask#272754](https://github.com/Homebrew/homebrew-cask/pull/272754)
+- PR：[Homebrew/homebrew-cask#272758](https://github.com/Homebrew/homebrew-cask/pull/272758)
 
 ### 升级
 
